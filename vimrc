@@ -99,10 +99,10 @@ noremap <c-i> <c-i>zz
 
 set nowrap
 " insertmode move cursor
- inoremap <Leader>h <Left>
- inoremap <Leader>j <Down>
- inoremap <Leader>k <Up>
- inoremap <Leader>l <Right>
+inoremap <Leader>h <c-o>h
+inoremap <Leader>j <c-o>j
+inoremap <Leader>k <c-o>k
+inoremap <Leader>l <c-o>l
 
 " <Leader> key
 let mapleader=";"
