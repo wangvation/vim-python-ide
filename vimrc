@@ -1,44 +1,57 @@
 set nocompatible
+set updatetime=100
+set autoread
 set encoding=utf-8
 set termencoding=utf-8
 set fileencodings=utf-8,gb2312,gbk,gb18030
-" vundle config
+set tabpagemax=10
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-" vundle plugin list
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'vim-scripts/phd'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'mileszs/ack.vim'
-Plugin 'majutsushi/tagbar'
-Plugin 'humiaozuzu/TabBar'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-fugitive'
-Plugin 'derekwyatt/vim-fswitch'
-Plugin 'kshenoy/vim-signature'
-Plugin 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
-Plugin 'vim-scripts/DfrankUtil'
-Plugin 'dyng/ctrlsf.vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'vim-scripts/DrawIt'
-Plugin 'SirVer/ultisnips'
-Plugin 'derekwyatt/vim-protodef'
-Plugin 'honza/vim-snippets'
-Plugin 'scrooloose/nerdtree'
-Plugin 'gcmt/wildfire.vim'
-Plugin 'sjl/gundo.vim'
-Plugin 'suan/vim-instant-markdown'
-Plugin 'lilydjwg/fcitx.vim'
-Plugin 'Yggdroot/indentLine'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'dense-analysis/ale'
-Plugin 'Chiel92/vim-autoformat'
-call vundle#end()
+
+" vim-plug
+call plug#begin('~/.vim/plugged')
+Plug 'altercation/vim-colors-solarized'
+Plug 'vim-scripts/phd'
+" Plug 'Lokaltog/vim-powerline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'mileszs/ack.vim'
+Plug 'majutsushi/tagbar'
+"Plug 'humiaozuzu/TabBar'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-fugitive'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'derekwyatt/vim-fswitch'
+Plug 'kshenoy/vim-signature'
+Plug 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
+" Plug 'vim-scripts/indexer.tar.gz'
+Plug 'vim-scripts/DfrankUtil'
+" Plug 'vim-scripts/vimprj'
+Plug 'dyng/ctrlsf.vim'
+" Plug 'terryma/vim-multiple-cursors'
+Plug 'scrooloose/nerdcommenter'
+Plug 'vim-scripts/DrawIt'
+Plug 'SirVer/ultisnips'
+Plug 'derekwyatt/vim-protodef'
+Plug 'honza/vim-snippets'
+Plug 'scrooloose/nerdtree'
+"Plug 'fholgado/minibufexpl.vim'
+Plug 'gcmt/wildfire.vim'
+Plug 'sjl/gundo.vim'
+" Plug 'Lokaltog/vim-easymotion'
+Plug 'suan/vim-instant-markdown'
+Plug 'lilydjwg/fcitx.vim'
+Plug 'Yggdroot/indentLine'
+Plug 'Valloric/YouCompleteMe'
+"Plug 'ervandew/supertab'
+" Plug 'nvie/vim-flake8'
+Plug 'dense-analysis/ale'
+Plug 'Chiel92/vim-autoformat'
+Plug 'heavenshell/vim-pydocstring'
+Plug 'mhinz/vim-signify'
+call plug#end()
+
 
 " load corresponding plugins based on different types detected
 filetype plugin on
@@ -79,7 +92,11 @@ set splitbelow
 set showcmd
 set incsearch
 set hlsearch
+nnoremap Zk :noh<cr>
 set ignorecase
+
+" display question
+set conceallevel=0
 
 " auto reload on file modify by outter application
 set autoread
@@ -95,30 +112,32 @@ noremap <c-o> <c-o>zz
 noremap <c-i> <c-i>zz
 
 " status bar style
-" let g:Powerline_colorscheme='solarized256'
+" let g:powerline_colorscheme='solarized256'
 
 set nowrap
-" insertmode move cursor
-inoremap <Leader>h <c-o>h
-inoremap <Leader>j <c-o>j
-inoremap <Leader>k <c-o>k
-inoremap <Leader>l <c-o>l
-
-" <Leader> key
+" <leader> key
 let mapleader=";"
+" insertmode move cursor
+
+"inoremap <leader>h <c-o>h
+"inoremap <leader>j <c-o>j
+"inoremap <leader>k <c-o>k
+"inoremap <leader>l <c-o>l
+
 " make configuration changes take effect immediately
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
+
 " vim cmd autocomplete
 set wildmenu
 " show tab
 set listchars=tab:>-,trail:-
 " paste from system clipboard
-vnoremap <Leader>p "+p
+noremap <leader>p "+p
 "copy to system clipboard
-vnoremap <Leader>y "+y
+noremap <leader>y "+y
 
 " save read only file
-nnoremap <Leader>x :w !sudo tee %<CR>
+nnoremap <leader>x :w !sudo tee %<cr>
 " enable insert model backspace not working
 set backspace=2
 "code smart indent
@@ -129,11 +148,42 @@ set expandtab
 autocmd BufNewFile,BufRead *.py set shiftwidth=2
 " code fold method
 set foldmethod=indent
-set foldenable
+set nofoldenable
+
+" edit config
+" move line to up
+noremap <c-k> ddkP
+
+" move linte to down
+noremap <c-j> ddp
+
+" insert blank line below
+nnoremap <silent><c-l> :set paste<cr>m`o<esc>``:set nopaste<cr>
+
+" insert blank line above
+nnoremap <silent><s-l> :set paste<cr>m`O<esc>``:set nopaste<cr>
+
+" buffer switch
+nnoremap <S-b>n :w<CR>:bn<CR>
+nnoremap <S-b>p :w<CR>:bp<CR>
+nnoremap <S-b>r :w<CR>:br<CR>
+nnoremap <S-b>l :w<CR>:bl<CR>
+nnoremap <S-b>1 :w<CR>:buffer 1<CR>
+nnoremap <S-b>2 :w<CR>:buffer 2<CR>
+nnoremap <S-b>3 :w<CR>:buffer 3<CR>
+nnoremap <S-b>4 :w<CR>:buffer 4<CR>
+nnoremap <S-b>5 :w<CR>:buffer 5<CR>
+nnoremap <S-b>6 :w<CR>:buffer 6<CR>
+nnoremap <S-b>7 :w<CR>:buffer 7<CR>
+nnoremap <S-b>8 :w<CR>:buffer 8<CR>
+nnoremap <S-b>9 :w<CR>:buffer 9<CR>
+nnoremap <S-b>d :w<CR>:bd<CR>:bn<CR>
+
+
 
 " 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
-nmap <Leader>b :NERDTreeToggle<CR>
-nmap <F6> :NERDTreeToggle<cr>
+nmap <Leader>b :NERDTreeToggle %<CR>
+nmap <F6> :NERDTreeToggle %<cr>
 " 设置NERDTree子窗口宽度"
 let NERDTreeWinSize=32
 " 设置NERDTree子窗口位置
@@ -145,9 +195,19 @@ let NERDTreeMinimalUI=1
 " 删除文件时自动删除文件对应 buffer
 let NERDTreeAutoDeleteBuffer=1
 let NERDTreeChDirMode=2
-let NERDTreeIgnore=['\~$','\.pyc','\.swp']
+let NERDTreeIgnore=['\~$','\.pyc','\.swp','^__pycache__$','^\.git$']
 let NERDTreeShowBookmarks=1
 let NERDChristmasTree=0
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+let g:plug_window = 'noautocmd vertical topleft new'
+
+" nerdcommenter config
+
+let g:NERDSpaceDelims=1
+let g:NERDCompactSexyComs = 1                                                                                                                                                             
+let g:NERDDefaultAlign = 'left'                                                                                                                                                           
+let g:NERDToggleCheckAllLines = 1 
 
 " indentline
 let g:indentLine_enabled=1
@@ -184,23 +244,52 @@ let g:ycm_confirm_extra_conf = 0
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
-nnoremap <Leader>f :YcmCompleter GoToDeclaration<CR>|
-nnoremap <Leader>g :YcmCompleter GoToDefinition<CR>|
-nnoremap <Leader>d :YcmCompleter GoToDefinitionElseDeclaration<CR>|
+"nnoremap <Leader>f :YcmCompleter GoToDeclaration<CR>|
+"nnoremap <Leader>g :YcmCompleter GoToDefinition<CR>|
+nnoremap <Leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>|
 let g:ycm_error_symbol = 'E:'
 let g:ycm_warning_symbol = 'W:'
+let g:ycm_semantic_triggers =  {
+         \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+         \ 'cs,lua,javascript': ['re!\w{2}'],
+         \ }
 
-" edit config
-" move line to up
-nnoremap <C-k> ddkP
-" move linte to down
-nnoremap <C-j> ddp
+
+" supertab config
+"let g:SuperTabRetainCompletionType = 1
+
+" Jedi Config
+
+"let g:jedi#auto_initialization=1
+"let g:jedi#auto_vim_configuration=1
+"let g:jedi#popup_on_dot=0
+"let g:jedi#popup_select_first=1
+"let g:jedi#auto_close_doc=1
+"let g:jedi#show_call_signatures=1
+"let g:jedi#show_call_signatures_delay=500
+"let g:jedi#use_tabs_not_buffers=1
+"let g:jedi#squelch_py_warning=0
+"let g:jedi#completions_enabled=1
+"let g:jedi#use_splits_not_buffers="left"
+"let g:jedi#force_py_version="3.6"
+"let g:jedi#smart_auto_mappings=1
+"let g:jedi#use_tag_stack=1
+
+
+"let g:jedi#goto_command = "<leader>g"
+"let g:jedi#goto_assignments_command = "<leader>f"
+"let g:jedi#goto_stubs_command = "<leader>e"
+"let g:jedi#documentation_command = "<leader>d"
+"let g:jedi#usages_command = "<leader>u"
+"let g:jedi#completions_command = "<c-n>"
+"let g:jedi#rename_command = "<leader>c"
 
 " autoformat
-nnoremap <Leader>r :Autoformat<CR>
-inoremap <Leader>r <C-o>:Autoformat<CR>
-let g:formatter_yapf_style = '~/.config/yapf/style.cfg'
-let g:formatdef_yapf="'yapf --style=\"{based_on_style:'.g:formatter_yapf_style.',indent_width:2}\" -l '.a:firstline.'-'.a:lastline"
+noremap <Leader>r :Autoformat<CR>
+" let g:formatter_yapf_style = '~/.config/yapf/style.cfg'
+" let g:formatdef_yapf="'yapf --style=\"{based_on_style:'.g:formatter_yapf_style.',indent_width:2}\" -l '.a:firstline.'-'.a:lastline"
+let g:formatter_yapf_style = 'google'
+let g:formatdef_yapf="'yapf --style=\"{indent_width:2}\" -l '.a:firstline.'-'.a:lastline"
 let g:formatters_python = ['yapf']
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
@@ -209,10 +298,10 @@ let g:autoformat_remove_trailing_spaces = 0
 " python3 syntax
 let g:python_highlight_all = 1
 
-" ale for python3 
+" ale for python3
 let g:ale_set_highlights = 0
 "自定义error和warning图标
-let g:ale_sign_error = '✗'
+let g:ale_sign_error = '✗ '
 let g:ale_sign_warning = '⚡'
 ""在vim自带的状态栏中整合ale
 let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
@@ -233,7 +322,7 @@ nmap <Leader>d :ALEDetail<CR>
 let g:ale_linters = {
                    \       'c++': ['clang'],
                    \       'c': ['clang'],
-                   \       'python': ['pylint','flake8'],
+                   \       'python': ['pylint'],
                    \}
 
 " let g:syntastic_python_checkers = ['pylint', 'flake8']
@@ -245,14 +334,6 @@ let g:ale_linters = {
 " let g:flake8_show_in_file = 1
 " let g:flake8_quickfix_location="topleft"
 
-" tabbar
-let g:Tb_MaxSize = 2
-let g:Tb_TabWrap = 1
-
-hi Tb_Normal guifg=white ctermfg=white
-hi Tb_Changed guifg=green ctermfg=green
-hi Tb_VisibleNormal ctermbg=252 ctermfg=235
-hi Tb_VisibleChanged guifg=green ctermbg=252 ctermfg=white
 
 " Tagbar
 nnoremap <F2> :set invpaste paste?<CR>
@@ -268,7 +349,7 @@ let g:tagbar_compact = 1
 " airline config
 let g:airline_theme="molokai"
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#whitespace#enabled = 1
 let g:airline#extensions#whitespace#symbol = '!'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
@@ -277,10 +358,57 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 if !exists('g:airline_symbols')
    let g:airline_symbols = {}
 endif
-let g:airline_symbols.branch = '⭠'
-let g:airline_symbols.readonly = '⭤'
+
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.dirty='⚡'
+
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <leader>1 <plug>Airlineselecttab1
+nmap <leader>2 <plug>Airlineselecttab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+nmap <leader>- <Plug>AirlineSelectPrevTab
+nmap <leader>+ <Plug>AirlineSelectNextTab
 
 " gundo config
 let g:gundo_prefer_python3 = 1
 nmap <F3> :GundoToggle<cr>
-nmap <Leader>u :GundoToggle<cr>
+nmap <Leader>o :GundoToggle<cr>
+
+" pydoctring config
+
+autocmd FileType python setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+let g:pydocstring_doq_path='/usr/local/bin/doq'
+let g:pydocstring_formatter = 'numpy'
+" nmap <silent> <C-H>d <Plug>(pydocstring)
+nmap <silent> <C-H>d :Pydocstring<CR>
+
+" config persistentr undo
+if has('persistent_undo')  " check if vim support it
+        set undofile " turn on persistentr undo feature
+        set undodir=$HOME/.vim/undo  " directory where undo file will be stored
+endif
+
+" vim-signify config
+let g:signify_vcs_list = ['git']
+
+" ack config
+if executable('ag')
+        let g:ackprg = 'ag --vimgrep --nogroup --nocolor --column'
+endif
+
+if filereadable("custom.vim")                                                                                                                                                             
+        so custom.vim                                                                                                                                                                     
+endif
