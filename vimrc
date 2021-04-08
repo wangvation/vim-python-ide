@@ -65,8 +65,11 @@ colorscheme monokai
 set t_Co=256
 set noshowmode
 
+set noai nosi
+set pastetoggle=<F3>
+
 " enable mouse
-set mouse=a
+set mouse=r
 set selection=exclusive
 set selectmode=mouse,key
 " show line number
@@ -92,7 +95,7 @@ set splitbelow
 set showcmd
 set incsearch
 set hlsearch
-nnoremap Zk :noh<cr>
+nnoremap <leader>h :noh<cr>
 set ignorecase
 
 " display question
@@ -124,6 +127,9 @@ let mapleader=";"
 "inoremap <leader>k <c-o>k
 "inoremap <leader>l <c-o>l
 
+inoremap jj <Esc>
+inoremap kk <Esc>
+
 " make configuration changes take effect immediately
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
@@ -136,6 +142,9 @@ noremap <leader>p "+p
 "copy to system clipboard
 noremap <leader>y "+y
 
+nnoremap <leader>w :w<cr>
+
+nnoremap <leader>q :q<cr>
 " save read only file
 nnoremap <leader>x :w !sudo tee %<cr>
 " enable insert model backspace not working
@@ -164,25 +173,25 @@ nnoremap <silent><c-l> :set paste<cr>m`o<esc>``:set nopaste<cr>
 nnoremap <silent><s-l> :set paste<cr>m`O<esc>``:set nopaste<cr>
 
 " buffer switch
-nnoremap <S-b>n :w<CR>:bn<CR>
-nnoremap <S-b>p :w<CR>:bp<CR>
-nnoremap <S-b>r :w<CR>:br<CR>
-nnoremap <S-b>l :w<CR>:bl<CR>
-nnoremap <S-b>1 :w<CR>:buffer 1<CR>
-nnoremap <S-b>2 :w<CR>:buffer 2<CR>
-nnoremap <S-b>3 :w<CR>:buffer 3<CR>
-nnoremap <S-b>4 :w<CR>:buffer 4<CR>
-nnoremap <S-b>5 :w<CR>:buffer 5<CR>
-nnoremap <S-b>6 :w<CR>:buffer 6<CR>
-nnoremap <S-b>7 :w<CR>:buffer 7<CR>
-nnoremap <S-b>8 :w<CR>:buffer 8<CR>
-nnoremap <S-b>9 :w<CR>:buffer 9<CR>
-nnoremap <S-b>d :w<CR>:bd<CR>:bn<CR>
+nnoremap Bn :bn<cr>
+nnoremap Bp :bp<cr>
+nnoremap Br :br<cr>
+nnoremap Bl :bl<cr>
+nnoremap B1 :bfirst<cr>
+nnoremap B2 :bfirst<cr>:1bn<cr>
+nnoremap B3 :bfirst<cr>:2bn<cr>
+nnoremap B4 :bfirst<cr>:3bn<cr>
+nnoremap B5 :bfirst<cr>:4bn<cr>
+nnoremap B6 :bfirst<cr>:5bn<cr>
+nnoremap B7 :bfirst<cr>:6bn<cr>
+nnoremap B8 :bfirst<cr>:7bn<cr>
+nnoremap B9 :bfirst<cr>:8bn<cr>
+nnoremap Bd :bd<cr>:bn<cr>
 
 
 
 " 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
-nmap <Leader>b :NERDTreeToggle %<CR>
+nmap <Leader>b :NERDTreeToggle %<cr>
 nmap <F6> :NERDTreeToggle %<cr>
 " 设置NERDTree子窗口宽度"
 let NERDTreeWinSize=32
@@ -205,9 +214,9 @@ let g:plug_window = 'noautocmd vertical topleft new'
 " nerdcommenter config
 
 let g:NERDSpaceDelims=1
-let g:NERDCompactSexyComs = 1                                                                                                                                                             
-let g:NERDDefaultAlign = 'left'                                                                                                                                                           
-let g:NERDToggleCheckAllLines = 1 
+let g:NERDCompactSexyComs = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDToggleCheckAllLines = 1
 
 " indentline
 let g:indentLine_enabled=1
@@ -244,9 +253,9 @@ let g:ycm_confirm_extra_conf = 0
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
-"nnoremap <Leader>f :YcmCompleter GoToDeclaration<CR>|
-"nnoremap <Leader>g :YcmCompleter GoToDefinition<CR>|
-nnoremap <Leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>|
+"nnoremap <Leader>f :YcmCompleter GoToDeclaration<cr>|
+"nnoremap <Leader>g :YcmCompleter GoToDefinition<cr>|
+nnoremap <Leader>g :YcmCompleter GoToDefinitionElseDeclaration<cr>|
 let g:ycm_error_symbol = 'E:'
 let g:ycm_warning_symbol = 'W:'
 let g:ycm_semantic_triggers =  {
@@ -285,11 +294,9 @@ let g:ycm_semantic_triggers =  {
 "let g:jedi#rename_command = "<leader>c"
 
 " autoformat
-noremap <Leader>r :Autoformat<CR>
-" let g:formatter_yapf_style = '~/.config/yapf/style.cfg'
-" let g:formatdef_yapf="'yapf --style=\"{based_on_style:'.g:formatter_yapf_style.',indent_width:2}\" -l '.a:firstline.'-'.a:lastline"
+noremap <Leader>r :Autoformat<cr>
 let g:formatter_yapf_style = 'google'
-let g:formatdef_yapf="'yapf --style=\"{indent_width:2}\" -l '.a:firstline.'-'.a:lastline"
+let g:formatdef_yapf="'yapf --style=\"{based_on_style:'.g:formatter_yapf_style.',indent_width:2}\" -l '.a:firstline.'-'.a:lastline"
 let g:formatters_python = ['yapf']
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
@@ -309,15 +316,15 @@ let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-""打开文件时不进行检查
-let g:ale_lint_on_enter = 0
+""打开文件时进行检查
+let g:ale_lint_on_enter = 1
 " 普通模式下，sp前往上一个错误或警告，sn前往下一个错误或警告
 nmap sp <Plug>(ale_previous_wrap)
 nmap sn <Plug>(ale_next_wrap)
 " <Leader>s触发/关闭语法检查
-nmap <Leader>s :ALEToggle<CR>
+nmap <Leader>s :ALEToggle<cr>
 " <Leader>d查看错误或警告的详细信息
-nmap <Leader>d :ALEDetail<CR>
+nmap <Leader>d :ALEDetail<cr>
 " 使用clang对c和c++进行语法检查，对python使用pylint进行语法检查
 let g:ale_linters = {
                    \       'c++': ['clang'],
@@ -336,7 +343,7 @@ let g:ale_linters = {
 
 
 " Tagbar
-nnoremap <F2> :set invpaste paste?<CR>
+nnoremap <F2> :set invpaste paste?<cr>
 set pastetoggle=<F2>
 nmap <F5> :TagbarToggle<cr>
 nmap <Leader>t :TagbarToggle<cr>
@@ -379,12 +386,13 @@ nmap <leader>6 <Plug>AirlineSelectTab6
 nmap <leader>7 <Plug>AirlineSelectTab7
 nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
-nmap <leader>- <Plug>AirlineSelectPrevTab
-nmap <leader>+ <Plug>AirlineSelectNextTab
+nmap <leader>p <Plug>AirlineSelectPrevTab
+nmap <leader>n <Plug>AirlineSelectNextTab
+nmap <leader>= :tabnew<cr>
+nmap <leader>- :tabclose<cr>
 
 " gundo config
 let g:gundo_prefer_python3 = 1
-nmap <F3> :GundoToggle<cr>
 nmap <Leader>o :GundoToggle<cr>
 
 " pydoctring config
@@ -392,8 +400,7 @@ nmap <Leader>o :GundoToggle<cr>
 autocmd FileType python setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 let g:pydocstring_doq_path='/usr/local/bin/doq'
 let g:pydocstring_formatter = 'numpy'
-" nmap <silent> <C-H>d <Plug>(pydocstring)
-nmap <silent> <C-H>d :Pydocstring<CR>
+nmap <C-H>d <Plug>(pydocstring)
 
 " config persistentr undo
 if has('persistent_undo')  " check if vim support it
@@ -401,14 +408,21 @@ if has('persistent_undo')  " check if vim support it
         set undodir=$HOME/.vim/undo  " directory where undo file will be stored
 endif
 
+" ack config
+" 使用 leader + a search
+cnoreabbrev Ack Ack!
+nnoremap <leader>a :Ack!<Space>
+
+if executable('ag')
+        let g:ackprg = 'ag --vimgrep --nogroup --column'
+endif
+
+" 高亮搜索关键词
+let g:ackhighlight = 1
+
 " vim-signify config
 let g:signify_vcs_list = ['git']
 
-" ack config
-if executable('ag')
-        let g:ackprg = 'ag --vimgrep --nogroup --nocolor --column'
-endif
-
-if filereadable("custom.vim")                                                                                                                                                             
-        so custom.vim                                                                                                                                                                     
+if filereadable("custom.vim")
+        so custom.vim
 endif
