@@ -29,7 +29,7 @@ Plug 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
 Plug 'vim-scripts/DfrankUtil'
 " Plug 'vim-scripts/vimprj'
 Plug 'dyng/ctrlsf.vim'
-" Plug 'terryma/vim-multiple-cursors'
+Plug 'Yggdroot/LeaderF',{'do':':LeaderfInstallCExtension'}
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/DrawIt'
 Plug 'SirVer/ultisnips'
@@ -52,6 +52,8 @@ Plug 'heavenshell/vim-pydocstring'
 Plug 'mhinz/vim-signify'
 call plug#end()
 
+" map  <leader> key
+let mapleader=";"
 
 " load corresponding plugins based on different types detected
 filetype plugin on
@@ -118,8 +120,6 @@ noremap <c-i> <c-i>zz
 " let g:powerline_colorscheme='solarized256'
 
 set nowrap
-" <leader> key
-let mapleader=";"
 " insertmode move cursor
 
 "inoremap <leader>h <c-o>h
@@ -253,9 +253,9 @@ let g:ycm_confirm_extra_conf = 0
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
-"nnoremap <Leader>f :YcmCompleter GoToDeclaration<cr>|
-"nnoremap <Leader>g :YcmCompleter GoToDefinition<cr>|
-nnoremap <Leader>g :YcmCompleter GoToDefinitionElseDeclaration<cr>|
+"nnoremap <Leader>f :YcmCompleter GoToDeclaration<CR>|
+"nnoremap <Leader>g :YcmCompleter GoToDefinition<CR>|
+nnoremap <Leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>|
 let g:ycm_error_symbol = 'E:'
 let g:ycm_warning_symbol = 'W:'
 let g:ycm_semantic_triggers =  {
@@ -294,9 +294,11 @@ let g:ycm_semantic_triggers =  {
 "let g:jedi#rename_command = "<leader>c"
 
 " autoformat
-noremap <Leader>r :Autoformat<cr>
+noremap <Leader>r :Autoformat<CR>
+" let g:formatter_yapf_style = '~/.config/yapf/style.cfg'
+" let g:formatdef_yapf="'yapf --style=\"{based_on_style:'.g:formatter_yapf_style.',indent_width:2}\" -l '.a:firstline.'-'.a:lastline"
 let g:formatter_yapf_style = 'google'
-let g:formatdef_yapf="'yapf --style=\"{based_on_style:'.g:formatter_yapf_style.',indent_width:2}\" -l '.a:firstline.'-'.a:lastline"
+let g:formatdef_yapf="'yapf --style=\"{indent_width:2}\" -l '.a:firstline.'-'.a:lastline"
 let g:formatters_python = ['yapf']
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
@@ -341,17 +343,6 @@ let g:ale_linters = {
 " let g:flake8_show_in_file = 1
 " let g:flake8_quickfix_location="topleft"
 
-
-" Tagbar
-nnoremap <F2> :set invpaste paste?<cr>
-set pastetoggle=<F2>
-nmap <F5> :TagbarToggle<cr>
-nmap <Leader>t :TagbarToggle<cr>
-let g:tagbar_left=0
-let g:tagbar_width=30
-let g:tagbar_autofocus = 1
-let g:tagbar_sort = 0
-let g:tagbar_compact = 1
 
 " airline config
 let g:airline_theme="molokai"
@@ -400,7 +391,8 @@ nmap <Leader>o :GundoToggle<cr>
 autocmd FileType python setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 let g:pydocstring_doq_path='/usr/local/bin/doq'
 let g:pydocstring_formatter = 'numpy'
-nmap <C-H>d <Plug>(pydocstring)
+" nmap <silent> <C-H>d <Plug>(pydocstring)
+nmap <silent> <C-H>d :Pydocstring<CR>
 
 " config persistentr undo
 if has('persistent_undo')  " check if vim support it
@@ -413,12 +405,18 @@ endif
 cnoreabbrev Ack Ack!
 nnoremap <leader>a :Ack!<Space>
 
-if executable('ag')
-        let g:ackprg = 'ag --vimgrep --nogroup --column'
+if executable('rg')
+        let g:ackprg = 'rg --vimgrep --type-not sql --smart-case'
 endif
 
 " 高亮搜索关键词
 let g:ackhighlight = 1
+
+" Auto close the Quickfix list after pressing '<enter>' on a list item
+let g:ack_autoclose = 1
+ 
+" Any empty ack search will search for the work the cursor is on
+let g:ack_use_cword_for_empty_search = 1
 
 " vim-signify config
 let g:signify_vcs_list = ['git']
