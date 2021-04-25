@@ -15,7 +15,6 @@ Plug 'vim-scripts/phd'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'mileszs/ack.vim'
-Plug 'majutsushi/tagbar'
 "Plug 'humiaozuzu/TabBar'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
@@ -122,13 +121,8 @@ noremap <c-i> <c-i>zz
 set nowrap
 " insertmode move cursor
 
-"inoremap <leader>h <c-o>h
-"inoremap <leader>j <c-o>j
-"inoremap <leader>k <c-o>k
-"inoremap <leader>l <c-o>l
-
-inoremap jj <Esc>
-inoremap kk <Esc>
+noremap <leader>c <Esc>
+inoremap <c-c> <Esc>
 
 " make configuration changes take effect immediately
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
@@ -155,6 +149,7 @@ set expandtab
 " set tabstop=2
 " set shiftwidth=2
 autocmd BufNewFile,BufRead *.py set shiftwidth=2
+autocmd FileType python setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 " code fold method
 set foldmethod=indent
 set nofoldenable
@@ -253,9 +248,9 @@ let g:ycm_confirm_extra_conf = 0
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
-"nnoremap <Leader>f :YcmCompleter GoToDeclaration<CR>|
-"nnoremap <Leader>g :YcmCompleter GoToDefinition<CR>|
-nnoremap <Leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>|
+"nnoremap <Leader>f :YcmCompleter GoToDeclaration<cr>|
+"nnoremap <Leader>g :YcmCompleter GoToDefinition<cr>|
+nnoremap <Leader>g :YcmCompleter GoToDefinitionElseDeclaration<cr>|
 let g:ycm_error_symbol = 'E:'
 let g:ycm_warning_symbol = 'W:'
 let g:ycm_semantic_triggers =  {
@@ -294,11 +289,9 @@ let g:ycm_semantic_triggers =  {
 "let g:jedi#rename_command = "<leader>c"
 
 " autoformat
-noremap <Leader>r :Autoformat<CR>
-" let g:formatter_yapf_style = '~/.config/yapf/style.cfg'
-" let g:formatdef_yapf="'yapf --style=\"{based_on_style:'.g:formatter_yapf_style.',indent_width:2}\" -l '.a:firstline.'-'.a:lastline"
+noremap <Leader>r :Autoformat<cr>
 let g:formatter_yapf_style = 'google'
-let g:formatdef_yapf="'yapf --style=\"{indent_width:2}\" -l '.a:firstline.'-'.a:lastline"
+let g:formatdef_yapf="'yapf --style=\"{based_on_style:'.g:formatter_yapf_style.',indent_width:2}\" -l '.a:firstline.'-'.a:lastline"
 let g:formatters_python = ['yapf']
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
@@ -388,10 +381,8 @@ nmap <Leader>o :GundoToggle<cr>
 
 " pydoctring config
 
-autocmd FileType python setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 let g:pydocstring_doq_path='/usr/local/bin/doq'
 let g:pydocstring_formatter = 'numpy'
-" nmap <silent> <C-H>d <Plug>(pydocstring)
 nmap <silent> <C-H>d :Pydocstring<CR>
 
 " config persistentr undo
