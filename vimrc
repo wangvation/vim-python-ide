@@ -32,8 +32,8 @@ Plug 'Yggdroot/LeaderF',{'do':':LeaderfInstallCExtension'}
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/DrawIt'
 Plug 'SirVer/ultisnips'
-Plug 'derekwyatt/vim-protodef'
 Plug 'honza/vim-snippets'
+Plug 'derekwyatt/vim-protodef'
 Plug 'scrooloose/nerdtree'
 "Plug 'fholgado/minibufexpl.vim'
 Plug 'gcmt/wildfire.vim'
@@ -43,7 +43,6 @@ Plug 'suan/vim-instant-markdown'
 Plug 'lilydjwg/fcitx.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'Valloric/YouCompleteMe'
-"Plug 'ervandew/supertab'
 " Plug 'nvie/vim-flake8'
 Plug 'dense-analysis/ale'
 Plug 'Chiel92/vim-autoformat'
@@ -55,9 +54,8 @@ call plug#end()
 let mapleader=";"
 
 " load corresponding plugins based on different types detected
-filetype plugin on
-" detect type of file
-filetype on
+"code smart indent
+filetype plugin indent on
 
 syntax on
 set background=dark
@@ -123,6 +121,7 @@ set nowrap
 
 noremap <leader>c <Esc>
 inoremap <c-c> <Esc>
+inoremap jj <Esc>
 
 " make configuration changes take effect immediately
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
@@ -137,14 +136,19 @@ noremap <leader>p "+p
 noremap <leader>y "+y
 
 nnoremap <leader>w :w<cr>
+inoremap <leader>w <Esc>:w<cr>
+vnoremap <leader>w <Esc>:w<cr>
 
 nnoremap <leader>q :q<cr>
+inoremap <leader>q <Esc>:wq<cr>
 " save read only file
 nnoremap <leader>x :w !sudo tee %<cr>
+inoremap <leader>x <Esc>:w !sudo tee %<cr>
+vnoremap <leader>x <Esc>:w !sudo tee %<cr>
+
+vnoremap <leader>g <c-g>
 " enable insert model backspace not working
 set backspace=2
-"code smart indent
-filetype indent on
 set expandtab
 " set tabstop=2
 " set shiftwidth=2
@@ -230,10 +234,6 @@ let g:indentLine_bgcolor_gui = '#262626'
 let g:indentLine_color_tty_light = 7 " (default: 4)
 let g:indentLine_color_dark = 1 " (default: 2)
 
-" UltiSnips 的 tab 键与 YCM 冲突，重新设定
-let g:UltiSnipsExpandTrigger="<leader><tab>"
-let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
-let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 
 " YCM Config
 let g:ycm_server_python_interpreter='/usr/bin/python3.6'
@@ -258,35 +258,11 @@ let g:ycm_semantic_triggers =  {
          \ 'cs,lua,javascript': ['re!\w{2}'],
          \ }
 
+" UltiSnips 的 tab 键与 YCM 冲突，重新设定
+let g:UltiSnipsExpandTrigger="<leader><tab>"
+let g:UltiSnipsJumpForwardTrigger="<s-f>"
+let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 
-" supertab config
-"let g:SuperTabRetainCompletionType = 1
-
-" Jedi Config
-
-"let g:jedi#auto_initialization=1
-"let g:jedi#auto_vim_configuration=1
-"let g:jedi#popup_on_dot=0
-"let g:jedi#popup_select_first=1
-"let g:jedi#auto_close_doc=1
-"let g:jedi#show_call_signatures=1
-"let g:jedi#show_call_signatures_delay=500
-"let g:jedi#use_tabs_not_buffers=1
-"let g:jedi#squelch_py_warning=0
-"let g:jedi#completions_enabled=1
-"let g:jedi#use_splits_not_buffers="left"
-"let g:jedi#force_py_version="3.6"
-"let g:jedi#smart_auto_mappings=1
-"let g:jedi#use_tag_stack=1
-
-
-"let g:jedi#goto_command = "<leader>g"
-"let g:jedi#goto_assignments_command = "<leader>f"
-"let g:jedi#goto_stubs_command = "<leader>e"
-"let g:jedi#documentation_command = "<leader>d"
-"let g:jedi#usages_command = "<leader>u"
-"let g:jedi#completions_command = "<c-n>"
-"let g:jedi#rename_command = "<leader>c"
 
 " autoformat
 noremap <Leader>r :Autoformat<cr>
@@ -326,15 +302,6 @@ let g:ale_linters = {
                    \       'c': ['clang'],
                    \       'python': ['pylint'],
                    \}
-
-" let g:syntastic_python_checkers = ['pylint', 'flake8']
-" let g:syntastic_python_python_exe = 'python3'
-
-" flak8
-" autocmd BufWritePost *.py call Flake8()
-" let g:flake8_quickfix_height = 7
-" let g:flake8_show_in_file = 1
-" let g:flake8_quickfix_location="topleft"
 
 
 " airline config
@@ -383,7 +350,7 @@ nmap <Leader>o :GundoToggle<cr>
 
 let g:pydocstring_doq_path='/usr/local/bin/doq'
 let g:pydocstring_formatter = 'numpy'
-nmap <silent> <C-H>d :Pydocstring<CR>
+nmap <silent> <C-H>d <Plug>(pydocstring)
 
 " config persistentr undo
 if has('persistent_undo')  " check if vim support it
