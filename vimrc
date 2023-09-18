@@ -1,10 +1,11 @@
 set nocompatible
-set updatetime=100
+set updatetime=300
 set autoread
 set encoding=utf-8
 set termencoding=utf-8
 set fileencodings=utf-8,gb2312,gbk,gb18030
 set tabpagemax=10
+set signcolumn=yes
 filetype off
 
 " vim-plug
@@ -40,14 +41,16 @@ Plug 'gcmt/wildfire.vim'
 Plug 'sjl/gundo.vim'
 " Plug 'Lokaltog/vim-easymotion'
 Plug 'suan/vim-instant-markdown'
-Plug 'lilydjwg/fcitx.vim'
+" Plug 'lilydjwg/fcitx.vim'
 Plug 'Yggdroot/indentLine'
-Plug 'Valloric/YouCompleteMe'
+" Plug 'Valloric/YouCompleteMe'
 " Plug 'nvie/vim-flake8'
 Plug 'dense-analysis/ale'
 Plug 'Chiel92/vim-autoformat'
 Plug 'heavenshell/vim-pydocstring'
 Plug 'mhinz/vim-signify'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'yaegassy/coc-pylsp', {'do': 'yarn install --frozen-lockfile'}
 call plug#end()
 
 " map  <leader> key
@@ -121,7 +124,7 @@ set nowrap
 
 noremap <leader>c <Esc>
 inoremap <c-c> <Esc>
-inoremap jj <Esc>
+inoremap jk <Esc>
 
 " make configuration changes take effect immediately
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
@@ -235,29 +238,6 @@ let g:indentLine_color_tty_light = 7 " (default: 4)
 let g:indentLine_color_dark = 1 " (default: 2)
 
 
-" YCM Config
-let g:ycm_server_python_interpreter='/usr/bin/python3.6'
-let g:ycm_min_num_of_chars_for_completion = 2
-"字符串中也开启补全
-let g:ycm_complete_in_strings = 1
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_complete_in_comments = 1
-let g:ycm_collect_identifiers_from_comments_and_strings = 0
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_add_preview_to_completeopt = 1
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
-"nnoremap <Leader>f :YcmCompleter GoToDeclaration<cr>|
-"nnoremap <Leader>g :YcmCompleter GoToDefinition<cr>|
-nnoremap <Leader>g :YcmCompleter GoToDefinitionElseDeclaration<cr>|
-let g:ycm_error_symbol = 'E:'
-let g:ycm_warning_symbol = 'W:'
-let g:ycm_semantic_triggers =  {
-         \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
-         \ 'cs,lua,javascript': ['re!\w{2}'],
-         \ }
-
 " UltiSnips 的 tab 键与 YCM 冲突，重新设定
 let g:UltiSnipsExpandTrigger="<leader><tab>"
 let g:UltiSnipsJumpForwardTrigger="<s-f>"
@@ -289,6 +269,8 @@ let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 ""打开文件时进行检查
 let g:ale_lint_on_enter = 1
+" 只在光标所在的行才显示virtualtext
+let g:ale_virtualtext_cursor = 1
 " 普通模式下，sp前往上一个错误或警告，sn前往下一个错误或警告
 nmap sp <Plug>(ale_previous_wrap)
 nmap sn <Plug>(ale_next_wrap)
@@ -298,11 +280,53 @@ nmap <Leader>s :ALEToggle<cr>
 nmap <Leader>d :ALEDetail<cr>
 " 使用clang对c和c++进行语法检查，对python使用pylint进行语法检查
 let g:ale_linters = {
-                   \       'c++': ['clang'],
                    \       'c': ['clang'],
+                   \       'c++': ['clang'],
                    \       'python': ['pylint'],
                    \}
 
+" coc config
+" 
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+noremap <silent><expr> <CR>
+        \ coc#pum#visible() ? coc#pum#confirm():
+        \ "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <silent><expr> <c-@> coc#refresh()
+
+" GoTo code navigation
+nmap <silent> <leader>d <Plug>(coc-definition)
+nmap <silent> <leader>g <Plug>(coc-type-definition)
+nmap <silent> <leader>i <Plug>(coc-implementation)
+nmap <silent> <leader>u <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+      call CocActionAsync('doHover')
+  else
+      call feedkeys('K', 'in')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming
+nmap <leader>m <Plug>(coc-rename)
 
 " airline config
 let g:airline_theme="molokai"
@@ -382,3 +406,4 @@ let g:signify_vcs_list = ['git']
 if filereadable("custom.vim")
         so custom.vim
 endif
+
