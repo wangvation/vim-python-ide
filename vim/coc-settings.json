@@ -1,17 +1,13 @@
 {
+  "suggest.enableFloat": true,
+  "suggest.enablePreselect":true,
+  "suggest.triggerAfterInsertEnter": false,
   "suggest.noselect":true,
+  "suggest.autoTrigger": "always",
+  "suggest.minTriggerInputLength": 1,
+  "suggest.snippetsSupport": true,
   "python.pythonPath": "python",
   "python.formatting.provider": "yapf",
-  "pyls.plugins.pycodestyle.ignore": ["E111"],
-  "pylsp.enable": true,
-  "pyls.plugins.yapf.enabled": true,
-  "pylsp.commandPath": "/usr/local/bin/pylsp",
-  "pylsp.plugins.pylint.enabled": true,
-  "pylsp.builtin.enableInstallPylspMypy": true,
-  "pylsp.builtin.enableInstallPylsIsort": true,
-  "pylsp.builtin.enableInstallPythonLspBlack": true,
-  "pylsp.builtin.enableInstallPylspRope": true,
-  "pylsp.builtin.enableInstallPythonLspRuff": true,
   "languageserver": {
     "clangd": {
       "command": "clangd",
@@ -29,6 +25,20 @@
         "buildDirectory": "build"
 
       }
+    },
+    "pyright": {
+        "command": "pyright-langserver",
+        "args": ["--stdio"],
+        "filetypes": ["python"],
+        "settings": {
+            "python": {
+                "analysis": {
+                    "typeCheckingMode": "basic",
+                    "diagnosticMode": "workspace",
+                    "useLibraryCodeForTypes": true
+                }
+            }
+        }
     }
   }
 }
