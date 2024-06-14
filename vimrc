@@ -22,7 +22,6 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'kshenoy/vim-signature'
 Plug 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
-Plug 'vim-scripts/DfrankUtil'
 Plug 'dyng/ctrlsf.vim'
 Plug 'Yggdroot/LeaderF',{'do':':LeaderfInstallCExtension'}
 Plug 'scrooloose/nerdcommenter'
@@ -43,7 +42,7 @@ Plug 'Chiel92/vim-autoformat'
 Plug 'heavenshell/vim-pydocstring'
 Plug 'mhinz/vim-signify'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'yaegassy/coc-pylsp', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'yaegassy/coc-pylsp', {'do': 'yarn install --frozen-lockfile'}
 call plug#end()
 
 " map  <leader> key
@@ -236,10 +235,7 @@ let g:indentLine_color_tty_light = 7 " (default: 4)
 let g:indentLine_color_dark = 1 " (default: 2)
 
 
-" UltiSnips 的 tab 键与 YCM 冲突，重新设定
-let g:UltiSnipsExpandTrigger="<leader><tab>"
-let g:UltiSnipsJumpForwardTrigger="<s-f>"
-let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
+
 
 
 " autoformat
@@ -249,7 +245,7 @@ let g:formatdef_yapf="'yapf --style=\"{based_on_style:'.g:formatter_yapf_style.'
 let g:formatters_python = ['yapf']
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
-let g:autoformat_remove_trailing_spaces = 0
+let g:autoformat_remove_trailing_spaces = 1
 
 " python3 syntax
 let g:python_highlight_all = 1
@@ -283,8 +279,16 @@ let g:ale_linters = {
                    \       'python': ['pylint'],
                    \}
 
+" UltiSnips 的 tab 键与 YCM 冲突，重新设定
+let g:UltiSnipsExpandTrigger="<leader><tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
 " coc config
-" 
+" 确保 coc.nvim 的片段跳转键与 UltiSnips 一致
+let g:coc_snippet_next = '<c-j>'
+let g:coc_snippet_prev = '<c-k>'
+"
 inoremap <silent><expr> <TAB>
       \ coc#pum#visible() ? coc#pum#next(1) :
       \ CheckBackspace() ? "\<Tab>" :
@@ -302,6 +306,7 @@ function! CheckBackspace() abort
 endfunction
 
 inoremap <silent><expr> <c-@> coc#refresh()
+
 
 " GoTo code navigation
 nmap <silent> gk <Plug>(coc-definition)

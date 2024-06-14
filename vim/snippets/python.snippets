@@ -1,0 +1,153 @@
+# Module Docstring
+snippet fdocs
+	"""
+	File: ${1:`vim_snippets#Filename('$1.py', 'foo.py')`}
+	Author: `g:snips_author`
+	Email: `g:snips_email`
+	Github: `g:snips_github`
+	Description: ${0}
+	"""
+
+snippet cdocs
+    """
+    ${1:Summary of the class.}
+
+    Attributes
+    ----------
+    ${2:attribute_name} : ${3:type}
+        ${4:Description of the attribute.}
+    """
+
+snippet docs "function docstring"
+	"""
+    ${1:Summary of the function.}
+
+    Parameters
+    ----------
+    ${2:args} : ${3:type}
+        ${4:Description of the arguments.}
+
+    Returns
+    -------
+    ${5:Return type}
+        ${6:Description of the return value.}
+
+    Raises
+    ------
+    ${7:Exception}
+        ${8:Description of the exceptions raised.}
+    """
+
+# New Class
+snippet cl
+	class ${1:ClassName}(${2:object}):
+    """
+    ${3:Summary of the class.}
+
+    Attributes
+    ----------
+    ${4:attribute_name} : ${5:type}
+        ${6:Description of the attribute.}
+    """
+
+    def __init__(self, ${7:args}):
+        """
+        Parameters
+        ----------
+        ${7:args} : ${8:type}
+            ${9:Description of the arguments.}
+        """
+        ${0:pass}
+
+snippet cla
+	class ${1:class_name}:
+		"""${0:description}"""
+
+snippet clai
+	class ${1:class_name}:
+		"""${2:description}"""
+		def __init__(self, ${3:args}):
+			${0:pass}
+
+# Data class
+snippet dcl dataclass
+	@dataclass
+	class ${1:ClassName}:
+		"""${2:description}"""
+		${3:var_1}: ${4:int}
+		${5:var_2}: ${6:float} = ${7:0}
+
+		def ${8:total}(self): -> $6:
+			return ${0:self.$3 * self.$5}
+
+# New Function
+snippet def
+	def ${1:fname}(${2:`indent('.') ? 'self' : ''`}):
+		"""${3:docstring for $1}"""
+		${0:pass}
+snippet deff
+	def ${1:fname}(${2:`indent('.') ? 'self' : ''`}):
+		${0:pass}
+snippet adef
+	async def ${1:fname}(${2:`indent('.') ? 'self' : ''`}):
+		"""${3:docstring for $1}"""
+		${0:pass}
+snippet adeff
+	async def ${1:fname}(${2:`indent('.') ? 'self' : ''`}):
+		${0:pass}
+
+# New Method
+snippet defi
+	def __init__(self, ${1:args}):
+		${0:pass}
+snippet defm
+	def ${1:mname}(self, ${2:arg}):
+		${0:pass}
+snippet adefm
+	async def ${1:mname}(self, ${2:arg}):
+		${0:pass}
+
+# New Property
+snippet prop
+	@property
+	def ${1:foo}(self) -> ${2:type}:
+		"""${3:doc}"""
+		return self._$1
+
+	@$1.setter
+	def $1(self, value: $2):
+		self._$1 = value
+
+# For
+snippet for
+	for ${1:item} in ${2:items}:
+		${0:pass}
+
+snippet fori
+	for ${1:i} in range(${2:n}):
+		${0:pass}
+
+snippet forj
+	for ${1:j} in range(${2:n}):
+		${0:pass}
+
+snippet fork
+	for ${1:k} in range(${2:n}):
+		${0:pass}
+
+snippet forx
+	for ${1:x} in ${2:items}
+
+snippet ford
+	for ${1:key},${2:value} in ${2:dict_obj}.items():
+		${0:pass}
+
+snippet listcomp "List comprehension" b
+	[${1:x} for ${2:x} in ${3:iterable}${4: if ${5:condition}}]
+
+snippet tuplecomp "Tuple comprehension (generator expression)" b
+	(${1:x} for ${2:x} in ${3:iterable}${4: if ${5:condition}})
+
+snippet dictcomp "Dict comprehension" b
+	{${1:key}: ${2:value} for ${3:key}, ${4:value} in ${5:iterable}${6: if
+	${7:condition}}}
