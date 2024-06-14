@@ -45,6 +45,8 @@ vim/neobundle/*
 # Ignore screenshot
 vim/screenshot/*
 
+# Ignore persistent undo
+vim/undo/*
 # Ignore YouCompleteMe files
 .ycm_cache/
 
