@@ -100,6 +100,9 @@ set conceallevel=0
 " auto reload on file modify by outter application
 set autoread
 
+" config virtualedit
+set virtualedit=onemore,block,insert
+
 " how many lines under cursor
 noremap j jzz
 noremap k kzz
@@ -148,7 +151,7 @@ vnoremap <leader>g <c-g>
 " enable insert model backspace not working
 set backspace=2
 set expandtab
-set tabstop=4 
+set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 " autocmd BufNewFile,BufRead *.py set shiftwidth=4
@@ -234,10 +237,6 @@ let g:indentLine_bgcolor_gui = '#262626'
 let g:indentLine_color_tty_light = 7 " (default: 4)
 let g:indentLine_color_dark = 1 " (default: 2)
 
-
-
-
-
 " autoformat
 noremap <Leader>r :Autoformat<cr>
 let g:formatter_yapf_style = 'google'
@@ -253,7 +252,7 @@ let g:python_highlight_all = 1
 " ale for python3
 let g:ale_set_highlights = 0
 "自定义error和warning图标
-let g:ale_sign_error = '✗ '
+let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '⚡'
 ""在vim自带的状态栏中整合ale
 let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
@@ -307,15 +306,12 @@ endfunction
 
 inoremap <silent><expr> <c-@> coc#refresh()
 
-
 " GoTo code navigation
 nmap <silent> gk <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gu <Plug>(coc-references)
-
-" Use K to show documentation in preview window
-nnoremap <silent> K :call ShowDocumentation()<CR>
+nmap <silent> gm <Plug>(coc-rename)
 
 function! ShowDocumentation()
   if CocAction('hasProvider', 'hover')
@@ -325,36 +321,44 @@ function! ShowDocumentation()
   endif
 endfunction
 
+" Use K to show documentation in preview window
+noremap <silent> K :call ShowDocumentation()<CR>
+
 " Highlight the symbol and its references when holding the cursor
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming
-nmap <leader>m <Plug>(coc-rename)
 
 " airline config
 let g:airline_theme="molokai"
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#whitespace#enabled = 1
-let g:airline#extensions#whitespace#symbol = '!'
+let g:airline#extensions#whitespace#symbol = ' '
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+
 if !exists('g:airline_symbols')
    let g:airline_symbols = {}
 endif
+let g:airline_left_sep = '|'
+let g:airline_left_alt_sep = '|'
+let g:airline_right_sep = '|'
+let g:airline_right_alt_sep = '|'
+let g:airline_symbols.branch = 'Y'
+let g:airline_symbols.paste = 'P'
+let g:airline_symbols.readonly = '🔒'
+let g:airline_symbols.colnr = 'C:'
+let g:airline_symbols.linenr = 'L'
+let g:airline_symbols.maxlinenr = ' '
+let g:airline_symbols.dirty='!'
+let g:airline_symbols.whitespace=' '
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = '?'
 
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = '☰'
-let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.dirty='⚡'
-
-let g:airline#extensions#tabline#buffer_idx_mode = 1
 nmap <leader>1 <plug>Airlineselecttab1
 nmap <leader>2 <plug>Airlineselecttab2
 nmap <leader>3 <Plug>AirlineSelectTab3
@@ -399,7 +403,7 @@ let g:ackhighlight = 1
 
 " Auto close the Quickfix list after pressing '<enter>' on a list item
 let g:ack_autoclose = 1
- 
+
 " Any empty ack search will search for the work the cursor is on
 let g:ack_use_cword_for_empty_search = 1
 
@@ -409,4 +413,5 @@ let g:signify_vcs_list = ['git']
 if filereadable("custom.vim")
         so custom.vim
 endif
+
 
