@@ -11,12 +11,9 @@ filetype off
 " vim-plug
 call plug#begin('~/.vim/plugged')
 Plug 'altercation/vim-colors-solarized'
-Plug 'vim-scripts/phd'
-" Plug 'Lokaltog/vim-powerline'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'mileszs/ack.vim'
-"Plug 'humiaozuzu/TabBar'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -25,9 +22,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'kshenoy/vim-signature'
 Plug 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
-" Plug 'vim-scripts/indexer.tar.gz'
 Plug 'vim-scripts/DfrankUtil'
-" Plug 'vim-scripts/vimprj'
 Plug 'dyng/ctrlsf.vim'
 Plug 'Yggdroot/LeaderF',{'do':':LeaderfInstallCExtension'}
 Plug 'scrooloose/nerdcommenter'
@@ -39,12 +34,10 @@ Plug 'scrooloose/nerdtree'
 "Plug 'fholgado/minibufexpl.vim'
 Plug 'gcmt/wildfire.vim'
 Plug 'sjl/gundo.vim'
-" Plug 'Lokaltog/vim-easymotion'
+Plug 'Lokaltog/vim-easymotion'
 Plug 'suan/vim-instant-markdown'
 " Plug 'lilydjwg/fcitx.vim'
 Plug 'Yggdroot/indentLine'
-" Plug 'Valloric/YouCompleteMe'
-" Plug 'nvie/vim-flake8'
 Plug 'dense-analysis/ale'
 Plug 'Chiel92/vim-autoformat'
 Plug 'heavenshell/vim-pydocstring'
@@ -94,6 +87,8 @@ set cursorcolumn
 set splitright
 set splitbelow
 
+set textwidth=79
+set colorcolumn=+1
 set showcmd
 set incsearch
 set hlsearch
@@ -117,7 +112,7 @@ noremap <c-o> <c-o>zz
 noremap <c-i> <c-i>zz
 
 " status bar style
-" let g:powerline_colorscheme='solarized256'
+let g:powerline_colorscheme='solarized256'
 
 set nowrap
 " insertmode move cursor
@@ -125,6 +120,7 @@ set nowrap
 noremap <leader>c <Esc>
 inoremap <c-c> <Esc>
 inoremap jk <Esc>
+
 
 " make configuration changes take effect immediately
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
@@ -153,13 +149,15 @@ vnoremap <leader>g <c-g>
 " enable insert model backspace not working
 set backspace=2
 set expandtab
-" set tabstop=2
-" set shiftwidth=2
-autocmd BufNewFile,BufRead *.py set shiftwidth=2
-autocmd FileType python setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+set tabstop=4 
+set shiftwidth=4
+set softtabstop=4
+" autocmd BufNewFile,BufRead *.py set shiftwidth=4
+" autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
 " code fold method
-set foldmethod=indent
+set foldmethod=syntax
 set nofoldenable
+noremap zk za
 
 " edit config
 " move line to up
@@ -247,7 +245,7 @@ let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 " autoformat
 noremap <Leader>r :Autoformat<cr>
 let g:formatter_yapf_style = 'google'
-let g:formatdef_yapf="'yapf --style=\"{based_on_style:'.g:formatter_yapf_style.',indent_width:2}\" -l '.a:firstline.'-'.a:lastline"
+let g:formatdef_yapf="'yapf --style=\"{based_on_style:'.g:formatter_yapf_style.',indent_width:4}\" -l '.a:firstline.'-'.a:lastline"
 let g:formatters_python = ['yapf']
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
@@ -306,10 +304,10 @@ endfunction
 inoremap <silent><expr> <c-@> coc#refresh()
 
 " GoTo code navigation
-nmap <silent> <leader>d <Plug>(coc-definition)
-nmap <silent> <leader>g <Plug>(coc-type-definition)
-nmap <silent> <leader>i <Plug>(coc-implementation)
-nmap <silent> <leader>u <Plug>(coc-references)
+nmap <silent> gk <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gu <Plug>(coc-references)
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call ShowDocumentation()<CR>

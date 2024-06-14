@@ -79,19 +79,19 @@ set cpo&vim
 " - async and await were added in Python 3.5 and are soft keywords.
 "
 
-syn keyword pythonBoolean  False True
-syn keyword pythonNone  None
+syn keyword pythonBoolean       False True
+syn keyword pythonNone          None
 syn keyword pythonStatement	class nextgroup=pythonClass skipwhite
 syn keyword pythonStatement	def nextgroup=pythonFunction skipwhite
-syn keyword pythonStatement	 as assert break continue del exec global
-syn keyword pythonStatement	lambda nonlocal pass print return with
+syn keyword pythonStatement	as assert break continue del exec global
+syn keyword pythonStatement	lambda nonlocal pass print return with yield
+syn keyword pythonStatement     async await
 syn keyword pythonConditional	elif else if
 syn keyword pythonRepeat	for while
 syn keyword pythonOperator	and in is not or
 syn keyword pythonException	except finally raise try
 syn keyword pythonInclude	import from
-syn keyword pythonAsync		async await
-syn keyword pythonSelf self cls
+syn keyword pythonSelf          self cls
 
 
 " Generators (yield from: Python 3.3)

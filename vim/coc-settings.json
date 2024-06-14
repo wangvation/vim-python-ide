@@ -1,0 +1,34 @@
+{
+  "suggest.noselect":true,
+  "python.pythonPath": "python",
+  "python.formatting.provider": "yapf",
+  "pyls.plugins.pycodestyle.ignore": ["E111"],
+  "pylsp.enable": true,
+  "pyls.plugins.yapf.enabled": true,
+  "pylsp.commandPath": "/usr/local/bin/pylsp",
+  "pylsp.plugins.pylint.enabled": true,
+  "pylsp.builtin.enableInstallPylspMypy": true,
+  "pylsp.builtin.enableInstallPylsIsort": true,
+  "pylsp.builtin.enableInstallPythonLspBlack": true,
+  "pylsp.builtin.enableInstallPylspRope": true,
+  "pylsp.builtin.enableInstallPythonLspRuff": true,
+  "languageserver": {
+    "clangd": {
+      "command": "clangd",
+      "rootPatterns": ["compile_flags.txt", "compile_commands.json"],
+      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
+    },
+    "cmake": {
+      "command": "cmake-language-server",
+      "filetypes": ["cmake"],
+      "rootPatterns": [
+        "build/"
+
+      ],
+      "initializationOptions": {
+        "buildDirectory": "build"
+
+      }
+    }
+  }
+}
