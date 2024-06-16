@@ -35,9 +35,8 @@ Plug 'gcmt/wildfire.vim'
 Plug 'sjl/gundo.vim'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'suan/vim-instant-markdown'
-" Plug 'lilydjwg/fcitx.vim'
 Plug 'Yggdroot/indentLine'
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 Plug 'Chiel92/vim-autoformat'
 Plug 'heavenshell/vim-pydocstring'
 Plug 'mhinz/vim-signify'
@@ -117,7 +116,6 @@ noremap <c-i> <c-i>zz
 let g:powerline_colorscheme='solarized256'
 
 set nowrap
-" insertmode move cursor
 
 noremap <leader>c <Esc>
 inoremap <c-c> <Esc>
@@ -169,10 +167,10 @@ noremap <c-k> ddkP
 noremap <c-j> ddp
 
 " insert blank line below
-nnoremap <silent><c-l> :set paste<cr>m`o<esc>``:set nopaste<cr>
+" nnoremap <silent><c-l> :set paste<cr>m`o<esc>``:set nopaste<cr>
 
 " insert blank line above
-nnoremap <silent><s-l> :set paste<cr>m`O<esc>``:set nopaste<cr>
+" nnoremap <silent><s-l> :set paste<cr>m`O<esc>``:set nopaste<cr>
 
 " buffer switch
 nnoremap Bn :bn<cr>
@@ -189,8 +187,6 @@ nnoremap B7 :bfirst<cr>:6bn<cr>
 nnoremap B8 :bfirst<cr>:7bn<cr>
 nnoremap B9 :bfirst<cr>:8bn<cr>
 nnoremap Bd :bd<cr>:bn<cr>
-
-
 
 " 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
 nmap <Leader>b :NERDTreeToggle %<cr>
@@ -282,11 +278,17 @@ let g:ale_linters = {
 let g:UltiSnipsExpandTrigger="<leader><tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsSnippetDirectories=['~/.vim/snippets/', 'UltiSnips']
 
 " coc config
 " 确保 coc.nvim 的片段跳转键与 UltiSnips 一致
+let g:coc_global_extensions = ['coc-snippets']
 let g:coc_snippet_next = '<c-j>'
 let g:coc_snippet_prev = '<c-k>'
+imap <c-j> <Plug>(coc-snippets-expand-jump)
+vmap <c-j> <Plug>(coc-snippets-select)
+imap <c-k> <Plug>(coc-snippets-expand)
+
 "
 inoremap <silent><expr> <TAB>
       \ coc#pum#visible() ? coc#pum#next(1) :
@@ -310,8 +312,9 @@ inoremap <silent><expr> <c-@> coc#refresh()
 nmap <silent> gk <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gu <Plug>(coc-references)
+nmap <silent> gr <Plug>(coc-references)
 nmap <silent> gm <Plug>(coc-rename)
+
 
 function! ShowDocumentation()
   if CocAction('hasProvider', 'hover')
@@ -325,7 +328,8 @@ endfunction
 noremap <silent> K :call ShowDocumentation()<CR>
 
 " Highlight the symbol and its references when holding the cursor
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+autocmd CursorHold * :redraw!
 
 " Symbol renaming
 

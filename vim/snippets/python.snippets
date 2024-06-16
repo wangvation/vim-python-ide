@@ -1,5 +1,5 @@
 # Module Docstring
-snippet fdocs
+snippet doc
 	"""
 	File: ${1:`vim_snippets#Filename('$1.py', 'foo.py')`}
 	Author: `g:snips_author`
@@ -8,56 +8,56 @@ snippet fdocs
 	Description: ${0}
 	"""
 
-snippet cdocs
-    """
-    ${1:Summary of the class.}
-
-    Attributes
-    ----------
-    ${2:attribute_name} : ${3:type}
-        ${4:Description of the attribute.}
-    """
-
-snippet docs "function docstring"
+snippet cdoc
 	"""
-    ${1:Summary of the function.}
+	${1:Summary of the class.}
 
-    Parameters
-    ----------
-    ${2:args} : ${3:type}
-        ${4:Description of the arguments.}
+	Attributes
+	----------
+	${2:attribute_name} : ${3:type}
+		${4:Description of the attribute.}
+	"""
 
-    Returns
-    -------
-    ${5:Return type}
-        ${6:Description of the return value.}
+snippet fdoc "function docstring"
+	"""
+	${1:Summary of the function.}
 
-    Raises
-    ------
-    ${7:Exception}
-        ${8:Description of the exceptions raised.}
-    """
+	Parameters
+	----------
+	${2:args} : ${3:type}
+		${4:Description of the arguments.}
+
+	Returns
+	-------
+	${5:Return type}
+		${6:Description of the return value.}
+
+	Raises
+	------
+	${7:Exception}
+		${8:Description of the exceptions raised.}
+	"""
 
 # New Class
 snippet cl
 	class ${1:ClassName}(${2:object}):
-    """
-    ${3:Summary of the class.}
+		"""
+		${3:Summary of the class.}
 
-    Attributes
-    ----------
-    ${4:attribute_name} : ${5:type}
-        ${6:Description of the attribute.}
-    """
+		Attributes
+		----------
+		${4:attribute_name} : ${5:type}
+			${6:Description of the attribute.}
+		"""
 
-    def __init__(self, ${7:args}):
-        """
-        Parameters
-        ----------
-        ${7:args} : ${8:type}
-            ${9:Description of the arguments.}
-        """
-        ${0:pass}
+		def __init__(self, ${7:args}):
+			"""
+			Parameters
+			----------
+			${7:args} : ${8:type}
+				${9:Description of the arguments.}
+			"""
+			${0:pass}
 
 snippet cla
 	class ${1:class_name}:
